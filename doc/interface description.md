@@ -5,15 +5,17 @@ class CanFrame
     unsigned char data[8]
 #### открытые методы:
     CanFrame()
-    ~CanFrame
+    ~CanFrame()
     
-    set_can_id()
-    get_can_id()
-    set_data()
-    get_data()
+    int generate() - создает случайный CAN-пакет
+    
+    методы аксессоры:
+    void setCanId(unsigned int id)
+    unsigned int getCanId()
+    void setData(unsigned char data)
+    unsigned char getData()
 
-    generate() - создает случайный CAN-пакет
-
+    
 class SendFrame 
 ---
 #### закрытые типы:
