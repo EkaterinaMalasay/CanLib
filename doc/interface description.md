@@ -1,41 +1,64 @@
+class CanInterface
+---
+#### закрытые типы:
+    char intrf_name[15] - имя интерфейса (например: can0)
+    int  socket_write   - дескриптор сокета
+    int  socket_read    
+#### открытые методы:
+    CanInterface(unsigned char *name)
+    
+    int connect() 
+    int disconnect()
+
+
 class CanFrame
 ---
 #### закрытые типы:
-    unsigned int can_id
-    unsigned char data[8]
+    unsigned int can_id    - уникальный идентификатор
+    unsigned int dlc       - длина поля данных в байтах (0-8)
+    unsigned char data[8]  - передаваемые данные (длина в поле dlc)
+
 #### открытые методы:
-    CanFrame()
+    CanFrame() - создает CAN-пакет со случайными данными
+    CanFrame(unsigned int can_id, unsigned int dlc, unsigned char *data)
+    CanFrame(unsigned int can_id, unsigned char *data)
     ~CanFrame()
     
-    int generate() - создает случайный CAN-пакет
+    void print_frame() - вывод CAN-пакета
     
     методы аксессоры:
     void set_CanId(unsigned int id)
     unsigned int get_CanId()
+    
+    void set_dlc(unsigned int dlc)
+    unsigned int get_dlc()
+    
     void set_data(unsigned char *data)
     unsigned char *get_data()
 
     
-class SendFrame 
+class SendingFrame 
 ---
+наследуется от CanInterface
 #### закрытые типы:
-    frame - обьект класса CanFrame
     double time - время отправки CAN-пакета
 #### открытые методы:
-    int send(CanFrame frame) - отправляет пакет, в случае удачной отправки возвращает 0, иначе -1
-    int input_frame() - создание CAN-пакета
-    int get_time()
+    int send(CanFrame *frame) - отправляет пакет, в случае удачной отправки возвращает 0, иначе -1
+
+    double get_time()
 
 
 
-class ReceiveFrame
+class ReceivingFrame
 ---
+наследуется от CanInterface
 #### закрытые типы:
-    frame - обьект класса CanFrame
     double time - время получения CAN-пакета
 #### открытые функции:
-    void reading() - чтение с шины CAN-пакетов
-    int receive() - получение CAN-пакета
-    void print_frame() - вывод полученного CAN-пакета
-    int get_time()
+    int receive(CanFrame *frame) - получение CAN-пакета
+    double get_time()
+    
+    ?  void queue_building(CanFrame *frame) - построение очереди входящих пакетов
+
+   
     
