@@ -37,11 +37,11 @@ class CanFrame
     unsigned char *get_data()
 
     
-class SendingFrame 
+class SenderFrame 
 ---
-наследуется от CanInterface
 #### закрытые типы:
-    double time - время отправки CAN-пакета
+    CanInterface *CanIntrf
+    uint64_t time - время отправки CAN-пакета
 #### открытые методы:
     int send(CanFrame *frame) - отправляет пакет, в случае удачной отправки возвращает 0, иначе -1
 
@@ -49,11 +49,11 @@ class SendingFrame
 
 
 
-class ReceivingFrame
+class ReceiverFrame
 ---
-наследуется от CanInterface
 #### закрытые типы:
-    double time - время получения CAN-пакета
+    CanInterface *CanIntrf
+    uint64_t time - время получения CAN-пакета
 #### открытые функции:
     int receive(CanFrame *frame) - получение CAN-пакета
     double get_time()
