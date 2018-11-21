@@ -47,8 +47,7 @@ class SenderFrame
     uint64_t time - время отправки CAN-пакета
 #### открытые методы:
     int send(CanFrame *frame) - отправляет пакет, в случае удачной отправки возвращает 0, иначе -1
-
-    double get_time()
+    uint64_t get_time()
 
 
 
@@ -59,7 +58,7 @@ class ReceiverFrame
     uint64_t time - время получения CAN-пакета
 #### открытые функции:
     int receive(CanFrame *frame) - получение CAN-пакета
-    double get_time()
+    uint64_t get_time()
     
     ?  void queue_building(CanFrame *frame) - построение очереди входящих пакетов
 
