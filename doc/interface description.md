@@ -9,6 +9,9 @@ class CanInterface
     
     int connect() 
     int disconnect()
+    
+    int get_socket_write()
+    int get_socket_read()
 
 
 class CanFrame
@@ -27,8 +30,8 @@ class CanFrame
     void print_frame() - вывод CAN-пакета
     
     методы аксессоры:
-    void set_CanId(unsigned int id)
-    unsigned int get_CanId()
+    void set_can_id(unsigned int id)
+    unsigned int get_can_id()
     
     void set_dlc(unsigned int dlc)
     unsigned int get_dlc()
