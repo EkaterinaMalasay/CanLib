@@ -12,26 +12,22 @@ using namespace std;
 
 // CanFrame::CanFrame()
 // {
-// 	can_id = 
 // }
 
-CanFrame::CanFrame(unsigned int can_id, unsigned int dlc, unsigned char* data)
+CanFrame::CanFrame(unsigned int can_id, unsigned int dlc, char* data)
 {
-	printf("in %s\n", data);
 	this->can_id = can_id;
 	this->dlc = dlc;
-	for(int i=0;i<dlc;i++)
-	{
+	for(int i=0; i<8; i++)
 		this->data[i]=data[i];
-		printf("%c\n", data[i]);
-	}
-	printf("in %s\n", data);
 }
 
-CanFrame::CanFrame(unsigned int can_id, unsigned char *data)
+CanFrame::CanFrame(unsigned int can_id, char *data)
 {
 	this->can_id = can_id;
-	//this->data=data;
+	for(int i=0; i<8; i++)
+		this->data[i]=data[i];
+	dlc = strlen(data);
 }
 
 CanFrame::~CanFrame()
@@ -45,9 +41,9 @@ void CanFrame::print_frame()
 	cout << can_id << " ["<< dlc << "] "<< data << endl;
 }
 
- void CanFrame::set_can_id(unsigned int id)
+ void CanFrame::set_can_id(unsigned int new_id)
 {
-	can_id = id;
+	can_id = new_id;
 }
 
 unsigned int CanFrame::get_can_id()
@@ -55,18 +51,20 @@ unsigned int CanFrame::get_can_id()
 	return(can_id);
 }
 
-
 unsigned int CanFrame::get_dlc()
 {
 	return(dlc);
 }
-    
-// void CanFrame::set_data(unsigned char *data)
-// {
-// 	this->dlc = dlc;
-// }
 
-unsigned char* CanFrame::get_data()
+void CanFrame::set_data(char *new_data)
+{
+	int i;
+	for(i = 0; i < 8; i++)
+		data[i] = new_data[i];
+	dlc = strlen(new_data);
+}
+
+char* CanFrame::get_data()
 {
 	return(data);
 }

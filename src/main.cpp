@@ -14,23 +14,30 @@ using namespace std;
 int main(int argc, char *argv[])
 {
 	char name[5] = "can0";
-	unsigned char data[8] = {0};
-	data[0]=1;
-	data[1]=2;
+	char data[8] = "12";
+	char data2[8] = "ABCF";
+
 
 	CanInterface c(name);
 	CanFrame d(123,2, data);
 
 	c.connect();
-	cout<< c.get_socket_read();
-	cout<< c.get_socket_write();
+	cout<< c.get_socket_read()<< endl;
+	cout<< c.get_socket_write()<< endl;
 	c.disconnect();
 
-	cout<< d.get_can_id();
-	cout<< d.get_dlc();
+	cout << data << endl;
+	cout << data2 << endl;
+	cout<< d.get_can_id()<< endl;
+	cout<< d.get_dlc()<< endl;
 	d.print_frame();
 	d.set_can_id(321);
 	d.print_frame();
+	d.set_data(data2);
+	d.print_frame();
+
+	CanFrame s(555, data);
+	s.print_frame();
 
 	return 0;
 }
