@@ -1,0 +1,66 @@
+#ifndef CANIO_H
+#define	CANLIB_H
+
+#define INTERFACE_NAME_SIZE 15
+
+
+//разделить на файлы
+
+class CanInterface
+{
+    char intrf_name[15]; //исправить на строку
+    int socket_write;
+    int socket_read;
+public:
+    CanInterface(unsigned char *name);
+    
+    int connect(); 
+    int disconnect();
+    int get_socket_write();
+    int get_socket_read();
+};
+
+
+class CanFrame
+{
+    unsigned int can_id;
+    unsigned int dlc;
+    unsigned char data[8];
+public:
+    CanFrame();
+    CanFrame(unsigned int can_id, unsigned int dlc, unsigned char *data);
+    CanFrame(unsigned int can_id, unsigned char *data);
+    ~CanFrame();
+    
+    void print_frame();
+    
+    void set_can_id(unsigned int id);
+    unsigned int get_can_id();
+    
+    void set_dlc(unsigned int dlc);
+    unsigned int get_dlc();
+    
+    void set_data(unsigned char *data);
+    unsigned char *get_data();
+};
+
+class SenderFrame 
+{
+    CanInterface *CanIntrf; //исправить на ссылку
+    uint64_t time;
+public:
+    int send(CanFrame *frame);
+    uint64_t get_time();
+};
+
+class ReceiverFrame 
+{
+    CanInterface *CanIntrf; //исправить на ссылку
+    uint64_t time;
+public:
+    int receive(CanFrame *frame);
+    uint64_t get_time();
+};
+
+#endif	/* CANLIB_H */
+
