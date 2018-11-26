@@ -33,7 +33,6 @@ class CanFrame
     void set_can_id(unsigned int id)
     unsigned int get_can_id()
     
-    void set_dlc(unsigned int dlc)
     unsigned int get_dlc()
     
     void set_data(unsigned char *data)
