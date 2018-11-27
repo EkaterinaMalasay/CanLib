@@ -10,11 +10,10 @@
 using namespace std;
 
 
-// CanFrame::CanFrame()
-// {
-// }
+CanFrame::CanFrame()
+{ }
 
-CanFrame::CanFrame(unsigned int can_id, unsigned int dlc, char* data)
+CanFrame::CanFrame(unsigned int can_id, unsigned int dlc, unsigned char* data)
 {
 	this->can_id = can_id;
 	this->dlc = dlc;
@@ -22,12 +21,12 @@ CanFrame::CanFrame(unsigned int can_id, unsigned int dlc, char* data)
 		this->data[i]=data[i];
 }
 
-CanFrame::CanFrame(unsigned int can_id, char *data)
+CanFrame::CanFrame(unsigned int can_id, unsigned char *data)
 {
 	this->can_id = can_id;
 	for(int i=0; i<8; i++)
 		this->data[i]=data[i];
-	dlc = strlen(data);
+	dlc = strlen((char *)data);
 }
 
 CanFrame::~CanFrame()
@@ -56,15 +55,15 @@ unsigned int CanFrame::get_dlc()
 	return(dlc);
 }
 
-void CanFrame::set_data(char *new_data)
+void CanFrame::set_data(unsigned char *new_data)
 {
 	int i;
 	for(i = 0; i < 8; i++)
 		data[i] = new_data[i];
-	dlc = strlen(new_data);
+	dlc = strlen((char *)new_data);
 }
 
-char* CanFrame::get_data()
+unsigned char* CanFrame::get_data()
 {
 	return(data);
 }
