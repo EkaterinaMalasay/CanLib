@@ -13,6 +13,9 @@ class CanInterface
     int get_socket_write()
     int get_socket_read()
 
+    int receive(CanFrame &CanFr) - получение CAN-пакета
+    int send(CanFrame &CanFr) - отправляет пакет
+
 
 class CanFrame
 ---
@@ -30,36 +33,18 @@ class CanFrame
     void print_frame() - вывод CAN-пакета
     
     методы аксессоры:
-    void set_can_id(unsigned int id)
+    void set_can_id(unsigned int new_id)
     unsigned int get_can_id()
     
+    void set_dlc(unsigned int new_dlc)
     unsigned int get_dlc()
     
-    void set_data(unsigned char *data)
+    void set_data(unsigned char *new_data)
     unsigned char *get_data()
-
-    
-class SenderFrame 
----
-#### закрытые типы:
-    CanInterface *CanIntrf
-    uint64_t time - время отправки CAN-пакета
-#### открытые методы:
-    int send(CanFrame *frame) - отправляет пакет, в случае удачной отправки возвращает 0, иначе -1
-    uint64_t get_time()
+    void set_data(int i, unsigned char new_char)
+    unsigned char get_data(int i)
 
 
-
-class ReceiverFrame
----
-#### закрытые типы:
-    CanInterface *CanIntrf
-    uint64_t time - время получения CAN-пакета
-#### открытые функции:
-    int receive(CanFrame *frame) - получение CAN-пакета
-    uint64_t get_time()
-    
-    ?  void queue_building(CanFrame *frame) - построение очереди входящих пакетов
 
    
     
