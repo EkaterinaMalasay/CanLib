@@ -11,7 +11,7 @@ canframe.o: canframe.cpp
 	$(CC) -c -o canframe.o canframe.cpp
 main.o: main.cpp caninterface.cpp canframe.cpp
 	$(CC) -c -o main.o main.cpp
-CanLib: main.o caninterface.o canframe.o
+CanLib: main.o caninterface.o canframe.o 
 	$(CC) -o CanLib main.o caninterface.o canframe.o
 
 clean:

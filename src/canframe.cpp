@@ -50,6 +50,11 @@ unsigned int CanFrame::get_can_id()
 	return(can_id);
 }
 
+void CanFrame::set_dlc(unsigned int new_dlc)
+{
+	dlc = new_dlc;
+}
+
 unsigned int CanFrame::get_dlc()
 {
 	return(dlc);
@@ -58,12 +63,22 @@ unsigned int CanFrame::get_dlc()
 void CanFrame::set_data(unsigned char *new_data)
 {
 	int i;
-	for(i = 0; i < 8; i++)
+	memset((char*)data, 0, sizeof(data));
+	for(i = 0; i < dlc; i++)
 		data[i] = new_data[i];
-	dlc = strlen((char *)new_data);
 }
 
-unsigned char* CanFrame::get_data()
+void CanFrame::set_data(int i, unsigned char new_char)
+{
+	data[i] = new_char;
+}
+
+unsigned char *CanFrame::get_data()
 {
 	return(data);
+}
+
+unsigned char CanFrame::get_data(int i)
+{
+	return(data[i]);
 }

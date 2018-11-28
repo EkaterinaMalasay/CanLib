@@ -1,4 +1,5 @@
 #include "../include/caninterface.h"
+#include "../include/canframe.h"
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
@@ -62,6 +63,32 @@ int CanInterface::disconnect()
 	close(socket_write);
 	close(socket_read);
 	return 0;
+}
+
+int CanInterface::receive(CanFrame &CanFr)
+{
+	struct can_frame frame;
+	int nbytes;
+	int i;
+
+	nbytes = read(socket_read, &frame, CANFD_MTU);
+	CanFr.set_can_id(frame.can_id);
+	CanFr.set_dlc(frame.can_dlc);
+	CanFr.set_data(frame.data);
+}
+
+int CanInterface::send(CanFrame &CanFr)
+{
+	struct can_frame frame;
+    int nbytes;
+    int i;
+
+    frame.can_id = CanFr.get_can_id();
+    frame.can_dlc = CanFr.get_dlc();
+    for(i = 0; i < frame.can_dlc; i++)
+		frame.data[i] = CanFr.get_data(i);
+
+    nbytes = write(socket_write, &frame, sizeof(struct can_frame));
 }
 
 
