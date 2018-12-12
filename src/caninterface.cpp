@@ -28,33 +28,49 @@ int CanInterface::connect()
 	struct sockaddr_can addr;
 	struct ifreq ifr;
 
+	/* socket for write */
+
 	socket_write = socket(PF_CAN, SOCK_RAW, CAN_RAW);
-		if( socket_write == -1 ) {
-			printf("%s\n", "socket error");
-		}
+	if( socket_write == -1 ) {
+		fprintf(stderr, "socket_write error\n");
+		return -1;
+	}
 
 	strcpy(ifr.ifr_name, intrf_name);
-	ioctl(socket_write, SIOCGIFINDEX, &ifr);
+	if (ioctl(socket_write, SIOCGIFINDEX, &ifr) <0) {
+		fprintf(stderr, "ioctl error\n");
+		return -1;
+	}
 
 	addr.can_family = AF_CAN;
 	addr.can_ifindex = ifr.ifr_ifindex;
 
-	bind(socket_write, (struct sockaddr *)&addr, sizeof(addr));
+	if (bind(socket_write, (struct sockaddr *)&addr, sizeof(addr)) < 0) {
+		fprintf(stderr, "bind error\n");
+		return -1;
+	}
 
-	///////////////////////////////////////////////
+	/* socket for read */
 
 	socket_read = socket(PF_CAN, SOCK_RAW, CAN_RAW);
-		if( socket_read == -1 ) {
-			printf("%s\n", "socket error");
-		}
+	if( socket_read == -1 ) {
+		fprintf(stderr, "socket_read error\n");
+		return -1;
+	}
 
 	strcpy(ifr.ifr_name, intrf_name);
-	ioctl(socket_read, SIOCGIFINDEX, &ifr);
+	if (ioctl(socket_read, SIOCGIFINDEX, &ifr) <0) {
+		fprintf(stderr, "ioctl error\n");
+		return -1;
+	}
 
 	addr.can_family = AF_CAN;
 	addr.can_ifindex = ifr.ifr_ifindex;
-
-	bind(socket_read, (struct sockaddr *)&addr, sizeof(addr));
+	
+	if (bind(socket_read, (struct sockaddr *)&addr, sizeof(addr)) < 0) {
+		fprintf(stderr, "bind error\n");
+		return -1;
+	}
 	return 0;
 }
 
