@@ -13,20 +13,24 @@ using namespace std;
 CanFrame::CanFrame()
 { }
 
-CanFrame::CanFrame(unsigned int can_id, unsigned int dlc, unsigned char* data)
+CanFrame::CanFrame(unsigned int can_id, unsigned int new_dlc, unsigned char*new_data)
 {
 	this->can_id = can_id;
-	this->dlc = dlc;
-	for(int i=0; i<8; i++)
-		this->data[i]=data[i];
+	dlc = new_dlc;
+	if (dlc <= MAX_LEN) {
+		for(int i=0; i<=dlc; i++)
+			data[i]=new_data[i];
+	}
 }
 
-CanFrame::CanFrame(unsigned int can_id, unsigned char *data)
+CanFrame::CanFrame(unsigned int can_id, unsigned char *new_data)
 {
 	this->can_id = can_id;
-	for(int i=0; i<8; i++)
-		this->data[i]=data[i];
-	dlc = strlen((char *)data);
+	dlc = strlen((char*)new_data);
+	if (dlc <= MAX_LEN) {
+		for(int i=0; i<=dlc; i++)
+			data[i]=new_data[i];
+	}
 }
 
 CanFrame::~CanFrame()
@@ -52,7 +56,10 @@ unsigned int CanFrame::get_can_id()
 
 void CanFrame::set_dlc(unsigned int new_dlc)
 {
-	dlc = new_dlc;
+	if (new_dlc > 8)
+		dlc = 8;
+	else
+		dlc = new_dlc;
 }
 
 unsigned int CanFrame::get_dlc()
@@ -62,15 +69,25 @@ unsigned int CanFrame::get_dlc()
 
 void CanFrame::set_data(unsigned char *new_data)
 {
-	int i;
-	memset((char*)data, 0, sizeof(data));
-	for(i = 0; i < dlc; i++)
-		data[i] = new_data[i];
+	int i, size;
+	memset((char*)data, 0, sizeof(data)); //cleaning array
+	size = strlen((char*)new_data);
+
+	if (size >= dlc) {
+		for(i = 0; i < dlc; i++)
+			data[i] = new_data[i];
+	}
+	else {
+		fprintf(stderr, "len data error\n");
+	}
 }
 
 void CanFrame::set_data(int i, unsigned char new_char)
 {
-	data[i] = new_char;
+	if (i < dlc)
+		data[i] = new_char;
+	else
+		fprintf(stderr, "set data error\n");
 }
 
 unsigned char *CanFrame::get_data()
@@ -80,5 +97,9 @@ unsigned char *CanFrame::get_data()
 
 unsigned char CanFrame::get_data(int i)
 {
-	return(data[i]);
+	if (i < dlc)
+		return(data[i]);
+	else 
+		fprintf(stderr, "get data error\n");
+
 }

@@ -1,15 +1,17 @@
 #ifndef CANFRAME_H
 #define	CANFRAME_H
 
+#define MAX_LEN 8
+
 class CanFrame
 {
     unsigned int can_id;
     unsigned int dlc;
-    unsigned char data[8];
+    unsigned char data[9];
 public:
     CanFrame();
-    CanFrame(unsigned int can_id, unsigned int dlc, unsigned char *data);
-    CanFrame(unsigned int can_id, unsigned char *data);
+    CanFrame(unsigned int can_id, unsigned int new_dlc, unsigned char *new_data);
+    CanFrame(unsigned int can_id, unsigned char *new_data);
     ~CanFrame();
     
     void print_frame();
