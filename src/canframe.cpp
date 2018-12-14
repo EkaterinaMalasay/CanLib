@@ -9,8 +9,9 @@
 #include <iostream>
 using namespace std;
 
+/*constructors*/
 
-CanFrame::CanFrame()
+CanFrame::CanFrame() //will generate random Can Frame (later..)
 { }
 
 CanFrame::CanFrame(unsigned int can_id, unsigned int new_dlc, unsigned char*new_data)
@@ -23,6 +24,7 @@ CanFrame::CanFrame(unsigned int can_id, unsigned int new_dlc, unsigned char*new_
 	}
 }
 
+/*this constructor automatically fills the field dlc*/
 CanFrame::CanFrame(unsigned int can_id, unsigned char *new_data)
 {
 	this->can_id = can_id;
@@ -35,8 +37,10 @@ CanFrame::CanFrame(unsigned int can_id, unsigned char *new_data)
 
 CanFrame::~CanFrame()
 {
-	///
+	//destructor
 }
+
+//////////////////////////////////*accessors*/////////////////////////////////////////////////
 
 
 void CanFrame::print_frame()
@@ -46,7 +50,10 @@ void CanFrame::print_frame()
 
  void CanFrame::set_can_id(unsigned int new_id)
 {
-	can_id = new_id;
+	if(new_id <= 0x1FFFFFFF)
+		can_id = new_id;
+	else
+		fprintf(stderr, "can_id error\n");
 }
 
 unsigned int CanFrame::get_can_id()
@@ -82,7 +89,7 @@ void CanFrame::set_data(unsigned char *new_data)
 	}
 }
 
-void CanFrame::set_data(int i, unsigned char new_char)
+void CanFrame::set_data(int i, unsigned char new_char) //i this is place in the array
 {
 	if (i < dlc)
 		data[i] = new_char;
@@ -101,5 +108,4 @@ unsigned char CanFrame::get_data(int i)
 		return(data[i]);
 	else 
 		fprintf(stderr, "get data error\n");
-
 }

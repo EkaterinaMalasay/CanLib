@@ -15,9 +15,8 @@ int main(int argc, char *argv[])
 {
 	char name[5] = "can0";
 	unsigned char data[8] = "12";
-	unsigned char data2[8] = "000000";
+	unsigned char data2[8] = "0000000";
 	unsigned char data3[9] = "ABCFABCF";
-
 
 	CanInterface c(name);
 

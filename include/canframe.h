@@ -15,7 +15,7 @@ public:
     ~CanFrame();
     
     void print_frame();
-    
+    /*accessors*/
     void set_can_id(unsigned int new_id);
     unsigned int get_can_id();
     
