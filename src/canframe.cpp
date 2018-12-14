@@ -63,8 +63,8 @@ unsigned int CanFrame::get_can_id()
 
 void CanFrame::set_dlc(unsigned int new_dlc)
 {
-	if (new_dlc > 8)
-		dlc = 8;
+	if (new_dlc > MAX_LEN)
+		dlc = MAX_LEN;
 	else
 		dlc = new_dlc;
 }
