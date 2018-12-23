@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 
 	CanFrame a(555,8, data3);
 	// CanFrame b(555,2, data2);
-	 CanFrame f(111,8, data2);
+	 CanFrame f(111,7, data2);
 	a.print_frame();
 	cout<<"a dlc: "<< a.get_dlc()<< endl;
 	cout<<"a data: "<<  a.get_data()<< endl;

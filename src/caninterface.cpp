@@ -96,21 +96,33 @@ int CanInterface::receive(CanFrame &CanFr)
 	CanFr.set_can_id(frame.can_id);
 	CanFr.set_dlc(frame.can_dlc);
 	CanFr.set_data(frame.data);
+
+	if ( CanFr.get_dlc() != strlen((char*)CanFr.get_data()) ) {
+		fprintf(stderr, "receive error\n");
+		return -1;
+	}
+	return 0;
 }
 
 int CanInterface::send(CanFrame &CanFr)
 {
 	struct can_frame frame;
-    int nbytes;
-    int i;
+	int nbytes;
+	int i;
 
-    /*filling struct with data*/
-    frame.can_id = CanFr.get_can_id();
-    frame.can_dlc = CanFr.get_dlc();
-    for(i = 0; i < frame.can_dlc; i++)
+	/*filling struct with data*/
+	frame.can_id = CanFr.get_can_id();
+	frame.can_dlc = CanFr.get_dlc();
+	if ( CanFr.get_dlc() != strlen((char*)CanFr.get_data()) ) {
+		fprintf(stderr, "send error\n");
+		return -1;
+	}
+
+	for(i = 0; i < frame.can_dlc; i++)
 		frame.data[i] = CanFr.get_data(i);
 
-    nbytes = write(socket_write, &frame, sizeof(struct can_frame)); //write in socket
+	nbytes = write(socket_write, &frame, sizeof(struct can_frame)); //write in socket
+	return 0;
 }
 
 

@@ -16,14 +16,14 @@ public:
     
     void print_frame();
     /*accessors*/
-    void set_can_id(unsigned int new_id);
+    int set_can_id(unsigned int new_id);
     unsigned int get_can_id();
     
-    void set_dlc(unsigned int new_dlc);
+    int set_dlc(unsigned int new_dlc);
     unsigned int get_dlc();
     
-    void set_data(unsigned char *new_data);
-    void set_data(int i, unsigned char new_char);
+    int set_data(unsigned char *new_data);
+    int set_data(int i, unsigned char new_char);
     unsigned char *get_data();
     unsigned char get_data(int i);
 };
