@@ -59,7 +59,10 @@ CanFrame::~CanFrame()
 
 void CanFrame::print_frame()
 {
-	cout << can_id << " ["<< dlc << "] "<< data << endl;
+	cout << can_id << " ["<< dlc << "] ";
+	for(int i = 0; i<dlc; i++)
+		cout << data[i];
+	cout << '\n';
 }
 
 int CanFrame::set_can_id(unsigned int new_id)

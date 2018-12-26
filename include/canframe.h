@@ -7,11 +7,11 @@ class CanFrame
 {
     unsigned int can_id;
     unsigned int dlc;
-    unsigned char data[9];
+    unsigned char data[MAX_LEN];
 public:
     CanFrame();
-    CanFrame(unsigned int can_id, unsigned int new_dlc, unsigned char *new_data);
-    CanFrame(unsigned int can_id, unsigned char *new_data);
+    CanFrame(unsigned int new_can_id, unsigned int new_dlc, unsigned char *new_data);
+    CanFrame(unsigned int new_can_id, unsigned char *new_data);
     ~CanFrame();
     
     void print_frame();
